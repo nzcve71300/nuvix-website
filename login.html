@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NUVIX - Login / Register</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+  <header>
+    <h1 class="brand">NUVIX</h1>
+    <nav>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="login.html" class="nav-link active">Login / Register</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="login-section">
+      <div class="tabs">
+        <button id="login-tab" class="tab active" aria-controls="login-panel" aria-selected="true">Login</button>
+        <button id="register-tab" class="tab" aria-controls="register-panel" aria-selected="false">Register</button>
+      </div>
+
+      <div id="login-panel" class="tab-panel" role="tabpanel" aria-labelledby="login-tab">
+        <form id="login-form" action="#" method="post" onsubmit="return fakeSubmit(event, 'login');">
+          <label for="login-discord-id">Discord Username#1234</label>
+          <input type="text" id="login-discord-id" name="discordUsername" placeholder="Enter your Discord username" required />
+
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" name="password" placeholder="Enter your password" required />
+
+          <div class="checkbox-wrapper">
+            <input type="checkbox" id="remember-me-login" name="rememberMe" />
+            <label for="remember-me-login">Remember Me for 30 days</label>
+          </div>
+
+          <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+
+          <button type="submit" class="btn">Login</button>
+        </form>
+      </div>
+
+      <div id="register-panel" class="tab-panel" role="tabpanel" aria-labelledby="register-tab" hidden>
+        <form id="register-form" action="#" method="post" onsubmit="return fakeSubmit(event, 'register');">
+          <label for="register-discord-id">Discord Username#1234</label>
+          <input type="text" id="register-discord-id" name="discordUsername" placeholder="Choose your Discord username" required />
+
+          <label for="register-email">Email</label>
+          <input type="email" id="register-email" name="email" placeholder="Enter your email" required />
+
+          <label for="register-password">Password</label>
+          <input type="password" id="register-password" name="password" placeholder="Create a password" required />
+
+          <div class="checkbox-wrapper">
+            <input type="checkbox" id="remember-me-register" name="rememberMe" />
+            <label for="remember-me-register">Remember Me for 30 days</label>
+          </div>
+
+          <div class="g-recaptcha" data-sitekey="6LehSmsrAAAAAJG493AuLLux06BHkQ1hgk2vDv9S"></div>
+
+          <button type="submit" class="btn">Register</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Join our Discord community: <a href="https://discord.gg/mM2RYuAZn5" target="_blank" rel="noopener noreferrer" class="footer-link">https://discord.gg/mM2RYuAZn5</a></p>
+  </footer>
+
+  <script>
+    // Tab switching logic
+    const loginTab = document.getElementById('login-tab');
+    const registerTab = document.getElementById('register-tab');
+    const loginPanel = document.getElementById('login-panel');
+    const registerPanel = document.getElementById('register-panel');
+
+    loginTab.addEventListener('click', () => {
+      loginTab.classList.add('active');
+      registerTab.classList.remove('active');
+
+      loginTab.setAttribute('aria-selected', 'true');
+      registerTab.setAttribute('aria-selected', 'false');
+
+      loginPanel.hidden = false;
+      registerPanel.hidden = true;
+    });
+
+    registerTab.addEventListener('click', () => {
+      registerTab.classList.add('active');
+      loginTab.classList.remove('active');
+
+      registerTab.setAttribute('aria-selected', 'true');
+      loginTab.setAttribute('aria-selected', 'false');
+
+      registerPanel.hidden = false;
+      loginPanel.hidden = true;
+    });
+
+    // Fake submit handler to simulate login/register (no real backend)
+    function fakeSubmit(event, action) {
+      event.preventDefault();
+
+      const rememberMeCheckbox = action === 'login'
+        ? document.getElementById('remember-me-login')
+        : document.getElementById('remember-me-register');
+
+      const rememberMe = rememberMeCheckbox.checked;
+
+      alert(`This is a fake ${action} form.\nRemember Me: ${rememberMe ? 'Yes' : 'No'}\nCaptcha is not validated.`);
+
+      // Here you can add logic to save the remember me in localStorage if you want
+
+      return false;
+    }
+  </script>
+</body>
+</html>
